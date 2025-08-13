@@ -68,9 +68,11 @@ mv ./kubectl ~/.local/bin/kubectl
 
 VALIDATE $? "kubectl installation"
 
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.zip"
-
-unzip eksctl_$PLATFORM.zip -d $HOME/bin
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
 
 
-rm eksctl_$PLATFORM.zip
+tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+
+sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm /tmp/eksctl
+
+VALIDATE $? "eksctl installation"
