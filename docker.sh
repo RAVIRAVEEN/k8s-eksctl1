@@ -52,7 +52,7 @@ systemctl enable docker
 
 VALIDATE $? "Enabled docker"
 
-usermod -aG docker ec2-user
+usermod -aG docker ec2-user 
 
 VALIDATE $? "added ec2-user  to docker group"
 
