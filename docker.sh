@@ -60,6 +60,8 @@ echo -e "$R Logout and login again $N"
 
 curl -LO https://dl.k8s.io/release/v1.33.0/bin/linux/amd64/kubectl
 
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
 chmod +x kubectl
 
 mkdir -p ~/.local/bin
@@ -68,11 +70,10 @@ mv ./kubectl ~/.local/bin/kubectl
 
 VALIDATE $? "kubectl installation"
 
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 
+sudo mv /tmp/eksctl /usr/local/bin
 
-tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
-
-sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm /tmp/eksctl
+eksctl version
 
 VALIDATE $? "eksctl installation"
